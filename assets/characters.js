@@ -1,4 +1,4 @@
-import { c, canvas } from "./app.js";
+import { c, canvas } from "../app.js";
 import { createImage } from "./helper.js";
 import { Wall } from "./objects.js";
 
@@ -74,7 +74,7 @@ export class Player {
 export class Ghost {
   static speed = 2;
   constructor({ position, velocity, currentSx, currentSy }) {
-    this.image = createImage("../img/all-ghosts.png");
+    this.image = createImage("./assets/img/all-ghosts.png");
     this.image.onload = () => {
       this.position = position;
       this.width = 40;

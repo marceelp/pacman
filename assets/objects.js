@@ -1,4 +1,4 @@
-import { c } from "./app.js"
+import { c } from "../app.js";
 
 export class Wall {
   static width = 40;
@@ -30,9 +30,9 @@ export class Interior {
   static width = 40;
   static height = 40;
   constructor({ position, image }) {
-    this.position = position;
     this.width = 40;
     this.height = 40;
+    this.position = position;
     this.image = image;
     this.image.onload = () => {
       this.position = position;

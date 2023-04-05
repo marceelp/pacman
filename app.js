@@ -1,6 +1,6 @@
-import { Controls } from "./controls.js";
-import { Player, Ghost } from "./characters.js";
-import { Wall, Interior, Pellet, PowerUp } from "./objects.js";
+import { Controls } from "./assets/controls.js";
+import { Player, Ghost } from "./assets/characters.js";
+import { Wall, Interior, Pellet, PowerUp } from "./assets/objects.js";
 import {
   createImage,
   circleCollidesWithRect,
@@ -8,7 +8,7 @@ import {
   changeGhostImage,
   playerWallCollision,
   scaredGhosts,
-} from "./helper.js";
+} from "./assets/helper.js";
 
 export const canvas = document.querySelector("canvas");
 const scoreElement = document.querySelector("#score");
@@ -18,10 +18,9 @@ canvas.height = 520;
 
 {
   // Make 'Play Again' button blink
-  var playAgain = document.getElementById("playAgain");
+  var restart = document.getElementById("restart");
   setInterval(function () {
-    playAgain.style.display =
-      playAgain.style.display == "none" ? "block" : "none";
+    restart.style.display = restart.style.display == "none" ? "block" : "none";
   }, 500);
 }
 
@@ -441,7 +440,7 @@ map.forEach((row, i) => {
               x: j * Wall.width,
               y: i * Wall.height,
             },
-            image: createImage("./img/pipeTop.png"),
+            image: createImage("./assets/img/pipeTop.png"),
           })
         );
         break;
@@ -452,7 +451,7 @@ map.forEach((row, i) => {
               x: j * Wall.width,
               y: i * Wall.height,
             },
-            image: createImage("./img/pipeRight.png"),
+            image: createImage("./assets/img/pipeRight.png"),
           })
         );
         break;
@@ -463,7 +462,7 @@ map.forEach((row, i) => {
               x: j * Wall.width,
               y: i * Wall.height,
             },
-            image: createImage("./img/pipeBottom.png"),
+            image: createImage("./assets/img/pipeBottom.png"),
           })
         );
         break;
@@ -474,7 +473,7 @@ map.forEach((row, i) => {
               x: j * Wall.width,
               y: i * Wall.height,
             },
-            image: createImage("./img/pipeLeft.png"),
+            image: createImage("./assets/img/pipeLeft.png"),
           })
         );
         break;
@@ -485,7 +484,7 @@ map.forEach((row, i) => {
               x: j * Wall.width,
               y: i * Wall.height,
             },
-            image: createImage("./img/Corner1.png"),
+            image: createImage("./assets/img/Corner1.png"),
           })
         );
         break;
@@ -496,7 +495,7 @@ map.forEach((row, i) => {
               x: j * Wall.width,
               y: i * Wall.height,
             },
-            image: createImage("./img/Corner2.png"),
+            image: createImage("./assets/img/Corner2.png"),
           })
         );
         break;
@@ -507,7 +506,7 @@ map.forEach((row, i) => {
               x: j * Wall.width,
               y: i * Wall.height,
             },
-            image: createImage("./img/Corner3.png"),
+            image: createImage("./assets/img/Corner3.png"),
           })
         );
         break;
@@ -518,7 +517,7 @@ map.forEach((row, i) => {
               x: j * Wall.width,
               y: i * Wall.height,
             },
-            image: createImage("./img/Corner4.png"),
+            image: createImage("./assets/img/Corner4.png"),
           })
         );
         break;
@@ -529,7 +528,7 @@ map.forEach((row, i) => {
               x: j * Wall.width,
               y: i * Wall.height,
             },
-            image: createImage("./img/pipeHorizontal.png"),
+            image: createImage("./assets/img/pipeHorizontal.png"),
           })
         );
         break;
@@ -540,7 +539,7 @@ map.forEach((row, i) => {
               x: j * Wall.width,
               y: i * Wall.height,
             },
-            image: createImage("./img/pipeVertical.png"),
+            image: createImage("./assets/img/pipeVertical.png"),
           })
         );
         break;
@@ -551,7 +550,7 @@ map.forEach((row, i) => {
               x: j * Wall.width,
               y: i * Wall.height,
             },
-            image: createImage("./img/pipeCorner1.png"),
+            image: createImage("./assets/img/pipeCorner1.png"),
           })
         );
         break;
@@ -562,7 +561,7 @@ map.forEach((row, i) => {
               x: j * Wall.width,
               y: i * Wall.height,
             },
-            image: createImage("./img/pipeCorner2.png"),
+            image: createImage("./assets/img/pipeCorner2.png"),
           })
         );
         break;
@@ -573,7 +572,7 @@ map.forEach((row, i) => {
               x: j * Wall.width,
               y: i * Wall.height,
             },
-            image: createImage("./img/pipeCorner3.png"),
+            image: createImage("./assets/img/pipeCorner3.png"),
           })
         );
         break;
@@ -584,7 +583,7 @@ map.forEach((row, i) => {
               x: j * Wall.width,
               y: i * Wall.height,
             },
-            image: createImage("./img/pipeCorner4.png"),
+            image: createImage("./assets/img/pipeCorner4.png"),
           })
         );
         break;
@@ -595,7 +594,7 @@ map.forEach((row, i) => {
               x: j * Wall.width,
               y: i * Wall.height,
             },
-            image: createImage("./img/block.png"),
+            image: createImage("./assets/img/block.png"),
           })
         );
         break;
@@ -606,7 +605,7 @@ map.forEach((row, i) => {
               x: j * Wall.width,
               y: i * Wall.height,
             },
-            image: createImage("./img/capLeft.png"),
+            image: createImage("./assets/img/capLeft.png"),
           })
         );
         break;
@@ -617,7 +616,7 @@ map.forEach((row, i) => {
               x: j * Wall.width,
               y: i * Wall.height,
             },
-            image: createImage("./img/capRight.png"),
+            image: createImage("./assets/img/capRight.png"),
           })
         );
         break;
@@ -628,7 +627,7 @@ map.forEach((row, i) => {
               x: j * Wall.width,
               y: i * Wall.height,
             },
-            image: createImage("./img/capBottom.png"),
+            image: createImage("./assets/img/capBottom.png"),
           })
         );
         break;
@@ -639,7 +638,7 @@ map.forEach((row, i) => {
               x: j * Wall.width,
               y: i * Wall.height,
             },
-            image: createImage("./img/capTop.png"),
+            image: createImage("./assets/img/capTop.png"),
           })
         );
         break;
@@ -650,7 +649,7 @@ map.forEach((row, i) => {
               x: j * Wall.width,
               y: i * Wall.height,
             },
-            image: createImage("./img/pipeCross.png"),
+            image: createImage("./assets/img/pipeCross.png"),
           })
         );
         break;
@@ -662,7 +661,7 @@ map.forEach((row, i) => {
               y: i * Wall.height,
             },
             color: "blue",
-            image: createImage("./img/pipeConnectorTop.png"),
+            image: createImage("./assets/img/pipeConnectorTop.png"),
           })
         );
         break;
@@ -674,7 +673,7 @@ map.forEach((row, i) => {
               y: i * Wall.height,
             },
             color: "blue",
-            image: createImage("./img/pipeConnectorRight.png"),
+            image: createImage("./assets/img/pipeConnectorRight.png"),
           })
         );
         break;
@@ -686,7 +685,7 @@ map.forEach((row, i) => {
               y: i * Wall.height,
             },
             color: "blue",
-            image: createImage("./img/pipeConnectorBottom.png"),
+            image: createImage("./assets/img/pipeConnectorBottom.png"),
           })
         );
         break;
@@ -697,7 +696,7 @@ map.forEach((row, i) => {
               x: j * Wall.width,
               y: i * Wall.height,
             },
-            image: createImage("./img/pipeConnectorLeft.png"),
+            image: createImage("./assets/img/pipeConnectorLeft.png"),
           })
         );
         break;
@@ -728,7 +727,7 @@ map.forEach((row, i) => {
               x: j * Wall.width,
               y: i * Wall.height,
             },
-            image: createImage("./img/ghostdoor.png"),
+            image: createImage("./assets/img/ghostdoor.png"),
           })
         );
         break;
@@ -739,7 +738,7 @@ map.forEach((row, i) => {
               x: j * Wall.width,
               y: i * Wall.height,
             },
-            image: createImage("./img/darkblock.png"),
+            image: createImage("./assets/img/darkblock.png"),
           })
         );
         break;
@@ -751,7 +750,7 @@ function animate() {
   animationID = requestAnimationFrame(animate);
   c.clearRect(0, 0, canvas.width, canvas.height);
 
-  document.querySelector("#scoreParagraph").style.display = "block";
+  document.querySelector("#score-text").style.display = "block";
 
   //base
   base.forEach((interior) => {
