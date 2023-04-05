@@ -75,13 +75,12 @@ export class Player {
 export class Ghost {
   static speed = 2;
   constructor({ position, velocity, currentSx, currentSy }) {
-    this.image = new Image();
-    this.image.src = "../img/all-ghosts.png";
-    this.image.addEventListener("load", () => {
+    this.image = createImage("../img/all-ghosts.png");
+    this.image.onload = () => {
       this.position = position;
       this.width = 40;
       this.height = 40;
-    });
+    };
     this.currentSx = currentSx;
     this.currentSy = currentSy;
     this.velocity = velocity;
@@ -93,6 +92,10 @@ export class Ghost {
   }
 
   draw() {
+    if (!this.position || !this.width || !this.height) {
+      // image not loaded yet, skip drawing
+      return;
+    }
     c.drawImage(
       this.image,
       this.currentSx,
