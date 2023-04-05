@@ -6,42 +6,54 @@ export class Controls {
   }
 
   keyDownEvent(event) {
-    if (event.key === "d" || event.key === "D") {
-      this.right = true;
-      this.lastKey = 'd'
-    }
-    if (event.key === "a" || event.key === "A") {
-      this.left = true;
-      this.lastKey = "a";
-    }
-    if (event.key === "w" || event.key === "W") {
-      this.up = true;
-      this.lastKey = "w";
-    }
-    if (event.key === "s" || event.key === "S") {
-      this.down = true;
-      this.lastKey = "s";
-    }
-    if (event.key === ' ') {
-      this.start = true;
+    switch (event.key) {
+      case "d":
+        this.right = true;
+        this.lastKey = "d";
+        return;
+
+      case "a":
+        this.left = true;
+        this.lastKey = "a";
+        return;
+
+      case "w":
+        this.up = true;
+        this.lastKey = "w";
+        return;
+
+      case "s":
+        this.down = true;
+        this.lastKey = "s";
+        return;
+
+      case " ":
+        this.start = true;
+        return;
     }
   }
 
   keyUpEvent(event) {
-    if (event.key === "d" || event.key === "D") {
-      this.right = false;
-    }
-    if (event.key === "a" || event.key === "A") {
-      this.left = false;
-    }
-    if (event.key === "w" || event.key === "W") {
-      this.up = false;
-    }
-    if (event.key === "s" || event.key === "S") {
-      this.down = false;
-    }
-    if (event.key === ' ') {
-      this.start = false;
+    switch (event.key) {
+      case "d":
+        this.right = false;
+        return;
+
+      case "a":
+        this.left = false;
+        return;
+
+      case "w":
+        this.up = false;
+        return;
+
+      case "s":
+        this.down = false;
+        return;
+
+      case " ":
+        this.start = false;
+        return;
     }
   }
 }

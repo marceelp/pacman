@@ -58,13 +58,12 @@ export class Player {
     this.move();
     this.animate();
 
-    //use shortcuts
+    //use wall shortcuts
     if (this.position.x >= canvas.width && this.position.y >= Wall.height * 6) {
       setTimeout(() => {
         this.position.x = 0;
       }, 0);
-    }
-    if (this.position.x <= 0 && this.position.y >= Wall.height * 6) {
+    } else if (this.position.x <= 0 && this.position.y >= Wall.height * 6) {
       setTimeout(() => {
         this.position.x = canvas.width;
       }, 0);
@@ -85,17 +84,13 @@ export class Ghost {
     this.currentSy = currentSy;
     this.velocity = velocity;
     this.speed = 2;
+    this.prevCollisions = [];
     this.scared = false;
     this.start = false;
-    this.prevCollisions = [];
     this.dead = false;
   }
 
   draw() {
-    if (!this.position || !this.width || !this.height) {
-      // image not loaded yet, skip drawing
-      return;
-    }
     c.drawImage(
       this.image,
       this.currentSx,
@@ -110,7 +105,10 @@ export class Ghost {
   }
 
   move() {
-    //use shortcuts
+    this.position.x += this.velocity.x;
+    this.position.y += this.velocity.y;
+
+    //use wall shortcuts
     if (
       this.position.x >= canvas.width - this.width / 2 &&
       this.position.y >= Wall.height * 6 &&
@@ -120,8 +118,7 @@ export class Ghost {
         this.position.x = 0 - Wall.width;
         this.velocity.x = 2;
       }, 0);
-    }
-    if (
+    } else if (
       this.position.x < 0 &&
       this.position.y >= Wall.height * 6 &&
       this.velocity.x < 0
@@ -135,8 +132,5 @@ export class Ghost {
   update() {
     this.draw();
     this.move();
-
-    this.position.x += this.velocity.x;
-    this.position.y += this.velocity.y;
   }
 }

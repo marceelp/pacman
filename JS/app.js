@@ -1,7 +1,14 @@
 import { Controls } from "./controls.js";
 import { Player, Ghost } from "./characters.js";
 import { Wall, Interior, Pellet, PowerUp } from "./objects.js";
-import { createImage, circleCollidesWithRect, rectCollidesWithRect, changeGhostImage, playerWallCollision, scaredGhosts } from "./helper.js";
+import {
+  createImage,
+  circleCollidesWithRect,
+  rectCollidesWithRect,
+  changeGhostImage,
+  playerWallCollision,
+  scaredGhosts,
+} from "./helper.js";
 
 export const canvas = document.querySelector("canvas");
 const scoreElement = document.querySelector("#score");
@@ -12,13 +19,14 @@ canvas.height = 520;
 {
   // Make 'Play Again' button blink
   var playAgain = document.getElementById("playAgain");
-  setInterval(function() {
-    playAgain.style.display = (playAgain.style.display == "none") ? "block" : "none";
+  setInterval(function () {
+    playAgain.style.display =
+      playAgain.style.display == "none" ? "block" : "none";
   }, 500);
 }
 
-let overlayElement = document.querySelector('#overlay')
-let resultElement = document.querySelector('#result')
+let overlayElement = document.querySelector("#overlay");
+let resultElement = document.querySelector("#result");
 let score = 0;
 let animationID;
 
@@ -96,19 +104,331 @@ const ghosts = [
 ];
 
 const map = [
-  ["1", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "2"],
-  ["|", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "p", ".", ".", "|"],
-  ["|", ".", "n", "w", "-", "-", "-", "]", ".", "[", "-", "-", "-", "]", ".", "[", "-", "-", "-", "w", "o", ".", "|"],
-  ["|", ".", "l", "m", ".", ".", "p", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "l", "m", ".", "|"],
-  ["|", ".", ".", ".", ".", "[", "-", "-", "]", ".", "[", "-", "]", ".", "[", "-", "-", "]", ".", ".", ".", ".", "|"],
-  ["l", "]", ".", "^", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "^", ".", "[", "m"],
-  [".", ".", ".", "z", "w", "w", "o", ".", "^", ".", "^", "g", "^", ".", "^", ".", "n", "w", "w", "x", ".", ".", "."],
-  ["n", "]", ".", "l", "y", "y", "m", ".", "|", ".", "|", "d", "|", ".", "|", ".", "l", "y", "y", "m", ".", "[", "o"],
-  ["|", ".", ".", ".", ".", ".", ".", ".", "|", ".", "|", "d", "|", ".", "|", ".", ".", ".", ".", ".", ".", "p", "|"],
-  ["|", ".", "n", "w", "w", "w", "o", ".", "_", ".", "4", "-", "3", ".", "_", ".", "n", "w", "w", "w", "o", ".", "|"],
-  ["|", ".", "l", "y", "y", "y", "m", ".", ".", ".", ".", ".", ".", ".", ".", ".", "l", "y", "y", "y", "m", ".", "|"],
-  ["|", ".", ".", ".", ".", "p", ".", ".", "n", "w", "w", "w", "w", "w", "o", ".", ".", ".", ".", ".", ".", ".", "|"],
-  ["4", "-", "-", "-", "-", "-", "-", "-", "y", "y", "n", "w", "o", "y", "y", "-", "-", "-", "-", "-", "-", "-", "3"],
+  [
+    "1",
+    "-",
+    "-",
+    "-",
+    "-",
+    "-",
+    "-",
+    "-",
+    "-",
+    "-",
+    "-",
+    "-",
+    "-",
+    "-",
+    "-",
+    "-",
+    "-",
+    "-",
+    "-",
+    "-",
+    "-",
+    "-",
+    "2",
+  ],
+  [
+    "|",
+    ".",
+    ".",
+    ".",
+    ".",
+    ".",
+    ".",
+    ".",
+    ".",
+    ".",
+    ".",
+    ".",
+    ".",
+    ".",
+    ".",
+    ".",
+    ".",
+    ".",
+    ".",
+    "p",
+    ".",
+    ".",
+    "|",
+  ],
+  [
+    "|",
+    ".",
+    "n",
+    "w",
+    "-",
+    "-",
+    "-",
+    "]",
+    ".",
+    "[",
+    "-",
+    "-",
+    "-",
+    "]",
+    ".",
+    "[",
+    "-",
+    "-",
+    "-",
+    "w",
+    "o",
+    ".",
+    "|",
+  ],
+  [
+    "|",
+    ".",
+    "l",
+    "m",
+    ".",
+    ".",
+    "p",
+    ".",
+    ".",
+    ".",
+    ".",
+    ".",
+    ".",
+    ".",
+    ".",
+    ".",
+    ".",
+    ".",
+    ".",
+    "l",
+    "m",
+    ".",
+    "|",
+  ],
+  [
+    "|",
+    ".",
+    ".",
+    ".",
+    ".",
+    "[",
+    "-",
+    "-",
+    "]",
+    ".",
+    "[",
+    "-",
+    "]",
+    ".",
+    "[",
+    "-",
+    "-",
+    "]",
+    ".",
+    ".",
+    ".",
+    ".",
+    "|",
+  ],
+  [
+    "l",
+    "]",
+    ".",
+    "^",
+    ".",
+    ".",
+    ".",
+    ".",
+    ".",
+    ".",
+    ".",
+    ".",
+    ".",
+    ".",
+    ".",
+    ".",
+    ".",
+    ".",
+    ".",
+    "^",
+    ".",
+    "[",
+    "m",
+  ],
+  [
+    ".",
+    ".",
+    ".",
+    "z",
+    "w",
+    "w",
+    "o",
+    ".",
+    "^",
+    ".",
+    "^",
+    "g",
+    "^",
+    ".",
+    "^",
+    ".",
+    "n",
+    "w",
+    "w",
+    "x",
+    ".",
+    ".",
+    ".",
+  ],
+  [
+    "n",
+    "]",
+    ".",
+    "l",
+    "y",
+    "y",
+    "m",
+    ".",
+    "|",
+    ".",
+    "|",
+    "d",
+    "|",
+    ".",
+    "|",
+    ".",
+    "l",
+    "y",
+    "y",
+    "m",
+    ".",
+    "[",
+    "o",
+  ],
+  [
+    "|",
+    ".",
+    ".",
+    ".",
+    ".",
+    ".",
+    ".",
+    ".",
+    "|",
+    ".",
+    "|",
+    "d",
+    "|",
+    ".",
+    "|",
+    ".",
+    ".",
+    ".",
+    ".",
+    ".",
+    ".",
+    "p",
+    "|",
+  ],
+  [
+    "|",
+    ".",
+    "n",
+    "w",
+    "w",
+    "w",
+    "o",
+    ".",
+    "_",
+    ".",
+    "4",
+    "-",
+    "3",
+    ".",
+    "_",
+    ".",
+    "n",
+    "w",
+    "w",
+    "w",
+    "o",
+    ".",
+    "|",
+  ],
+  [
+    "|",
+    ".",
+    "l",
+    "y",
+    "y",
+    "y",
+    "m",
+    ".",
+    ".",
+    ".",
+    ".",
+    ".",
+    ".",
+    ".",
+    ".",
+    ".",
+    "l",
+    "y",
+    "y",
+    "y",
+    "m",
+    ".",
+    "|",
+  ],
+  [
+    "|",
+    ".",
+    ".",
+    ".",
+    ".",
+    "p",
+    ".",
+    ".",
+    "n",
+    "w",
+    "w",
+    "w",
+    "w",
+    "w",
+    "o",
+    ".",
+    ".",
+    ".",
+    ".",
+    ".",
+    ".",
+    ".",
+    "|",
+  ],
+  [
+    "4",
+    "-",
+    "-",
+    "-",
+    "-",
+    "-",
+    "-",
+    "-",
+    "y",
+    "y",
+    "n",
+    "w",
+    "o",
+    "y",
+    "y",
+    "-",
+    "-",
+    "-",
+    "-",
+    "-",
+    "-",
+    "-",
+    "3",
+  ],
 ];
 
 map.forEach((row, i) => {
@@ -431,8 +751,7 @@ function animate() {
   animationID = requestAnimationFrame(animate);
   c.clearRect(0, 0, canvas.width, canvas.height);
 
-  document.querySelector('#scoreParagraph').style.display = 'block';
-
+  document.querySelector("#scoreParagraph").style.display = "block";
 
   //base
   base.forEach((interior) => {
@@ -447,15 +766,15 @@ function animate() {
     //ghost starts shifted
     ghosts.forEach((ghost) => {
       if (
-        ghost.position.x === interior.position.x && 
-        ghost.position.y === interior.position.y && 
+        ghost.position.x === interior.position.x &&
+        ghost.position.y === interior.position.y &&
         !ghost.start
       ) {
         ghost.velocity.x = 0;
         ghost.velocity.y = 0;
       } else if (
-        ghost.position.x === interior.position.x && 
-        ghost.position.y === interior.position.y && 
+        ghost.position.x === interior.position.x &&
+        ghost.position.y === interior.position.y &&
         ghost.start
       ) {
         ghost.velocity.x = 0;
@@ -497,8 +816,8 @@ function animate() {
     if (pellets.length === 0) {
       cancelAnimationFrame(animationID);
       setTimeout(() => {
-        overlayElement.style.display = 'block'
-        resultElement.innerHTML = 'You win!';
+        overlayElement.style.display = "block";
+        resultElement.innerHTML = "You win!";
       }, 500);
     }
   }
@@ -521,7 +840,7 @@ function animate() {
         ghost.scared = true;
         //make ghosts run away when scared
         setTimeout(() => {
-          scaredGhosts(ghost, player)
+          scaredGhosts(ghost, player);
         }, 0);
         //ghosts scared for 3.5sec
         setTimeout(() => {
@@ -542,15 +861,18 @@ function animate() {
     }, i * 7000);
 
     //ghost touches player
-    if (circleCollidesWithRect({ circle: player, rect: ghost, Wall }) && !ghost.dead) {
+    if (
+      circleCollidesWithRect({ circle: player, rect: ghost, Wall }) &&
+      !ghost.dead
+    ) {
       if (ghost.scared) {
-        ghost.image = createImage('../img/darkblock.png')
+        ghost.image = createImage("../img/darkblock.png");
         ghost.dead = true;
       } else if (!ghost.scared) {
         cancelAnimationFrame(animationID);
         setTimeout(() => {
-          overlayElement.style.display = 'block'
-          resultElement.innerHTML = 'You lose!'
+          overlayElement.style.display = "block";
+          resultElement.innerHTML = "You lose!";
         }, 500);
       }
     }
@@ -647,4 +969,4 @@ function animate() {
   }
   player.update();
 }
-animate()
+animate();
