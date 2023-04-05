@@ -27,22 +27,49 @@ export function rectCollidesWithRect({ rect1, rect2, Wall }) {
 }
 
 export function scaredGhosts(ghost, player) {
-  if (ghost.velocity.x >= player.velocity.x && ghost.position.x < player.position.x && ghost.velocity.y === player.position.y) {
-    ghost.velocity.x = -player.velocity.x + 3
-    ghost.velocity.y = 0
-  } else if (ghost.velocity.x <= player.velocity.x && ghost.position.x > player.position.x && ghost.velocity.y === player.velocity.y) {
-    ghost.velocity.x = player.velocity.x - 3
+  if (
+    ghost.velocity.x >= player.velocity.x &&
+    ghost.position.x < player.position.x &&
+    ghost.velocity.y === player.position.y
+  ) {
+    ghost.velocity.x = -player.velocity.x + 3;
     ghost.velocity.y = 0;
-  } else if (ghost.velocity.y >= player.velocity.y && ghost.position.y < player.position.y && ghost.velocity.x === player.velocity.x) {
-    ghost.velocity.y = -2
+  } else if (
+    ghost.velocity.x <= player.velocity.x &&
+    ghost.position.x > player.position.x &&
+    ghost.velocity.y === player.velocity.y
+  ) {
+    ghost.velocity.x = player.velocity.x - 3;
+    ghost.velocity.y = 0;
+  } else if (
+    ghost.velocity.y >= player.velocity.y &&
+    ghost.position.y < player.position.y &&
+    ghost.velocity.x === player.velocity.x
+  ) {
+    ghost.velocity.y = -2;
     ghost.velocity.x = 0;
-  } else if (ghost.velocity.y <= player.velocity.y && ghost.position.y > player.position.y && ghost.velocity.x === player.velocity.x) {
-    ghost.velocity.y = 2
+  } else if (
+    ghost.velocity.y <= player.velocity.y &&
+    ghost.position.y > player.position.y &&
+    ghost.velocity.x === player.velocity.x
+  ) {
+    ghost.velocity.y = 2;
     ghost.velocity.x = 0;
   }
 }
 
-export function changeGhostImage(ghosts, i, sx0, sy0, sx1, sy1, sx2, sy2, sx3, sy3) {
+export function changeGhostImage(
+  ghosts,
+  i,
+  sx0,
+  sy0,
+  sx1,
+  sy1,
+  sx2,
+  sy2,
+  sx3,
+  sy3
+) {
   if (ghosts[i].velocity.x >= 0 && ghosts[i].velocity.y === 0) {
     if (!ghosts[i].scared) {
       ghosts[i].currentSx = sx0;
@@ -75,7 +102,7 @@ export function changeGhostImage(ghosts, i, sx0, sy0, sx1, sy1, sx2, sy2, sx3, s
       ghosts[i].currentSy = sy3;
     } else {
       ghosts[i].currentSx = 0;
-      ghosts[i].currentSy = 760
+      ghosts[i].currentSy = 760;
     }
   }
 }
@@ -157,5 +184,57 @@ export function playerWallCollision(player, walls, Wall) {
         player.velocity.y = player.speed;
       }
     }
+  }
+}
+
+export function changeDirection(
+  collisions,
+  ghost,
+  wall,
+  Wall,
+  rectCollidesWithRect
+) {
+  if (
+    !collisions.includes("right") &&
+    rectCollidesWithRect({
+      rect1: { ...ghost, velocity: { x: ghost.speed, y: 0 } },
+      rect2: wall,
+      Wall,
+    })
+  ) {
+    collisions.push("right");
+  }
+
+  if (
+    !collisions.includes("left") &&
+    rectCollidesWithRect({
+      rect1: { ...ghost, velocity: { x: -ghost.speed, y: 0 } },
+      rect2: wall,
+      Wall,
+    })
+  ) {
+    collisions.push("left");
+  }
+
+  if (
+    !collisions.includes("down") &&
+    rectCollidesWithRect({
+      rect1: { ...ghost, velocity: { x: 0, y: ghost.speed } },
+      rect2: wall,
+      Wall,
+    })
+  ) {
+    collisions.push("down");
+  }
+
+  if (
+    !collisions.includes("up") &&
+    rectCollidesWithRect({
+      rect1: { ...ghost, velocity: { x: 0, y: -ghost.speed } },
+      rect2: wall,
+      Wall,
+    })
+  ) {
+    collisions.push("up");
   }
 }

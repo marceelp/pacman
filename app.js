@@ -1,6 +1,7 @@
 import { Controls } from "./assets/controls.js";
 import { Player, Ghost } from "./assets/characters.js";
 import { Wall, Interior, Pellet, PowerUp } from "./assets/objects.js";
+import { map } from "./assets/map.js";
 import {
   createImage,
   circleCollidesWithRect,
@@ -8,31 +9,30 @@ import {
   changeGhostImage,
   playerWallCollision,
   scaredGhosts,
+  changeDirection,
 } from "./assets/helper.js";
 
 export const canvas = document.querySelector("canvas");
-const scoreElement = document.querySelector("#score");
 export const c = canvas.getContext("2d");
 canvas.width = 920;
 canvas.height = 520;
 
-{
-  // Make 'Play Again' button blink
-  var restart = document.getElementById("restart");
-  setInterval(function () {
-    restart.style.display = restart.style.display == "none" ? "block" : "none";
-  }, 500);
-}
-
-let overlayElement = document.querySelector("#overlay");
-let resultElement = document.querySelector("#result");
-let score = 0;
-let animationID;
+const scoreElement = document.querySelector("#score");
+const overlayElement = document.querySelector("#overlay");
+const resultElement = document.querySelector("#result");
+const restartElement = document.getElementById("restart");
+setInterval(function () {
+  restartElement.style.display =
+    restartElement.style.display == "none" ? "block" : "none";
+}, 500);
 
 const walls = [];
 const pellets = [];
 const powerUps = [];
 const base = [];
+
+let animationID;
+let score = 0;
 
 const controls = new Controls();
 const player = new Player({
@@ -45,7 +45,7 @@ const player = new Player({
 });
 
 const ghosts = [
-  //red
+  //RED
   new Ghost({
     position: {
       x: Wall.width * 11,
@@ -59,7 +59,7 @@ const ghosts = [
     currentSy: 0,
   }),
 
-  //cyan
+  //CYAN
   new Ghost({
     position: {
       x: Wall.width * 11,
@@ -73,7 +73,7 @@ const ghosts = [
     currentSy: 0,
   }),
 
-  //pink
+  //PINK
   new Ghost({
     position: {
       x: Wall.width * 11,
@@ -87,7 +87,7 @@ const ghosts = [
     currentSy: 390,
   }),
 
-  //orange
+  //ORANGE
   new Ghost({
     position: {
       x: Wall.width * 11,
@@ -100,334 +100,6 @@ const ghosts = [
     currentSx: 400,
     currentSy: 390,
   }),
-];
-
-const map = [
-  [
-    "1",
-    "-",
-    "-",
-    "-",
-    "-",
-    "-",
-    "-",
-    "-",
-    "-",
-    "-",
-    "-",
-    "-",
-    "-",
-    "-",
-    "-",
-    "-",
-    "-",
-    "-",
-    "-",
-    "-",
-    "-",
-    "-",
-    "2",
-  ],
-  [
-    "|",
-    ".",
-    ".",
-    ".",
-    ".",
-    ".",
-    ".",
-    ".",
-    ".",
-    ".",
-    ".",
-    ".",
-    ".",
-    ".",
-    ".",
-    ".",
-    ".",
-    ".",
-    ".",
-    "p",
-    ".",
-    ".",
-    "|",
-  ],
-  [
-    "|",
-    ".",
-    "n",
-    "w",
-    "-",
-    "-",
-    "-",
-    "]",
-    ".",
-    "[",
-    "-",
-    "-",
-    "-",
-    "]",
-    ".",
-    "[",
-    "-",
-    "-",
-    "-",
-    "w",
-    "o",
-    ".",
-    "|",
-  ],
-  [
-    "|",
-    ".",
-    "l",
-    "m",
-    ".",
-    ".",
-    "p",
-    ".",
-    ".",
-    ".",
-    ".",
-    ".",
-    ".",
-    ".",
-    ".",
-    ".",
-    ".",
-    ".",
-    ".",
-    "l",
-    "m",
-    ".",
-    "|",
-  ],
-  [
-    "|",
-    ".",
-    ".",
-    ".",
-    ".",
-    "[",
-    "-",
-    "-",
-    "]",
-    ".",
-    "[",
-    "-",
-    "]",
-    ".",
-    "[",
-    "-",
-    "-",
-    "]",
-    ".",
-    ".",
-    ".",
-    ".",
-    "|",
-  ],
-  [
-    "l",
-    "]",
-    ".",
-    "^",
-    ".",
-    ".",
-    ".",
-    ".",
-    ".",
-    ".",
-    ".",
-    ".",
-    ".",
-    ".",
-    ".",
-    ".",
-    ".",
-    ".",
-    ".",
-    "^",
-    ".",
-    "[",
-    "m",
-  ],
-  [
-    ".",
-    ".",
-    ".",
-    "z",
-    "w",
-    "w",
-    "o",
-    ".",
-    "^",
-    ".",
-    "^",
-    "g",
-    "^",
-    ".",
-    "^",
-    ".",
-    "n",
-    "w",
-    "w",
-    "x",
-    ".",
-    ".",
-    ".",
-  ],
-  [
-    "n",
-    "]",
-    ".",
-    "l",
-    "y",
-    "y",
-    "m",
-    ".",
-    "|",
-    ".",
-    "|",
-    "d",
-    "|",
-    ".",
-    "|",
-    ".",
-    "l",
-    "y",
-    "y",
-    "m",
-    ".",
-    "[",
-    "o",
-  ],
-  [
-    "|",
-    ".",
-    ".",
-    ".",
-    ".",
-    ".",
-    ".",
-    ".",
-    "|",
-    ".",
-    "|",
-    "d",
-    "|",
-    ".",
-    "|",
-    ".",
-    ".",
-    ".",
-    ".",
-    ".",
-    ".",
-    "p",
-    "|",
-  ],
-  [
-    "|",
-    ".",
-    "n",
-    "w",
-    "w",
-    "w",
-    "o",
-    ".",
-    "_",
-    ".",
-    "4",
-    "-",
-    "3",
-    ".",
-    "_",
-    ".",
-    "n",
-    "w",
-    "w",
-    "w",
-    "o",
-    ".",
-    "|",
-  ],
-  [
-    "|",
-    ".",
-    "l",
-    "y",
-    "y",
-    "y",
-    "m",
-    ".",
-    ".",
-    ".",
-    ".",
-    ".",
-    ".",
-    ".",
-    ".",
-    ".",
-    "l",
-    "y",
-    "y",
-    "y",
-    "m",
-    ".",
-    "|",
-  ],
-  [
-    "|",
-    ".",
-    ".",
-    ".",
-    ".",
-    "p",
-    ".",
-    ".",
-    "n",
-    "w",
-    "w",
-    "w",
-    "w",
-    "w",
-    "o",
-    ".",
-    ".",
-    ".",
-    ".",
-    ".",
-    ".",
-    ".",
-    "|",
-  ],
-  [
-    "4",
-    "-",
-    "-",
-    "-",
-    "-",
-    "-",
-    "-",
-    "-",
-    "y",
-    "y",
-    "n",
-    "w",
-    "o",
-    "y",
-    "y",
-    "-",
-    "-",
-    "-",
-    "-",
-    "-",
-    "-",
-    "-",
-    "3",
-  ],
 ];
 
 map.forEach((row, i) => {
@@ -885,49 +557,7 @@ function animate() {
     //change direction
     const collisions = [];
     walls.forEach((wall) => {
-      if (
-        !collisions.includes("right") &&
-        rectCollidesWithRect({
-          rect1: { ...ghost, velocity: { x: ghost.speed, y: 0 } },
-          rect2: wall,
-          Wall,
-        })
-      ) {
-        collisions.push("right");
-      }
-
-      if (
-        !collisions.includes("left") &&
-        rectCollidesWithRect({
-          rect1: { ...ghost, velocity: { x: -ghost.speed, y: 0 } },
-          rect2: wall,
-          Wall,
-        })
-      ) {
-        collisions.push("left");
-      }
-
-      if (
-        !collisions.includes("down") &&
-        rectCollidesWithRect({
-          rect1: { ...ghost, velocity: { x: 0, y: ghost.speed } },
-          rect2: wall,
-          Wall,
-        })
-      ) {
-        collisions.push("down");
-      }
-
-      if (
-        !collisions.includes("up") &&
-        rectCollidesWithRect({
-          rect1: { ...ghost, velocity: { x: 0, y: -ghost.speed } },
-          rect2: wall,
-          Wall,
-        })
-      ) {
-        collisions.push("up");
-      }
+      changeDirection(collisions, ghost, wall, Wall, rectCollidesWithRect);
     });
 
     if (collisions.length > ghost.prevCollisions.length) {
