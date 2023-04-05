@@ -93,11 +93,6 @@ export class Ghost {
   }
 
   draw() {
-    if (!this.position || !this.width || !this.height) {
-      // image not loaded yet, skip drawing
-      return;
-    }
-    window.onload;
     c.drawImage(
       this.image,
       this.currentSx,
