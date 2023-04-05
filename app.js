@@ -865,7 +865,7 @@ function animate() {
       !ghost.dead
     ) {
       if (ghost.scared) {
-        ghost.image = createImage("../img/darkblock.png");
+        ghost.image = createImage("./assets/img/darkblock.png");
         ghost.dead = true;
       } else if (!ghost.scared) {
         cancelAnimationFrame(animationID);
