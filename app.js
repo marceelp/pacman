@@ -551,7 +551,7 @@ function animate() {
     //CHANGE GHOST IMG WHEN CHANGING DIRECTION
     changeGhostImage(ghosts, 0, 0, 0, 190, 190, 0, 190, 190, 0); //RED
     changeGhostImage(ghosts, 1, 400, 0, 590, 190, 400, 190, 590, 0); //CYAN
-    changeGhostImage(ghosts, 2, 0, 390, 190, 580, 0, 580, 190, 390); //PINK
+    changeGhostImage(ghosts, 2, 0, 380, 190, 570, 0, 580, 190, 390); //PINK
     changeGhostImage(ghosts, 3, 400, 390, 590, 580, 400, 580, 590, 390); //ORANGE
 
     //CHANGE GHOST DIRECTION RANDOMLY
