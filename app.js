@@ -424,17 +424,17 @@ function animate() {
 
   document.querySelector("#score-text").style.display = "block";
 
-  //base
+  //BASE
   base.forEach((interior) => {
     interior.draw();
 
-    //player collides with base
+    //PLAYER-BASE COLLISION
     if (circleCollidesWithRect({ circle: player, rect: interior, Wall })) {
       player.velocity.x = player.speed;
       player.velocity.y = 0;
     }
 
-    //ghost starts shifted
+    //GHOST POSITIONS IN BASE
     ghosts.forEach((ghost) => {
       if (
         ghost.position.x === interior.position.x &&
@@ -454,20 +454,20 @@ function animate() {
     });
   });
 
-  //player-wall collision and direction change
+  //PLAYER-WALL COLLISION
   playerWallCollision(player, walls, Wall);
 
-  //walls
+  //WALLS
   walls.forEach((wall) => {
     wall.draw();
-    //player stops in "corners"
+    //PLAYER STOPS WHEN HITTING WALL
     if (circleCollidesWithRect({ circle: player, rect: wall, Wall })) {
       player.velocity.x = 0;
       player.velocity.y = 0;
     }
   });
 
-  //pellets
+  //PELLETS
   for (let i = pellets.length - 1; 0 <= i; i--) {
     const pellet = pellets[i];
     pellet.draw();
@@ -483,7 +483,7 @@ function animate() {
       scoreElement.innerHTML = score;
     }
 
-    //pacman eats all pellets
+    //PLAYER WINS
     if (pellets.length === 0) {
       cancelAnimationFrame(animationID);
       setTimeout(() => {
@@ -493,12 +493,12 @@ function animate() {
     }
   }
 
-  //powerUps
+  //POWERUPS
   for (let i = powerUps.length - 1; 0 <= i; i--) {
     const powerUp = powerUps[i];
     powerUp.draw();
 
-    //player collects powerUp
+    //PLAYER COLLECTS POWERUP
     if (
       Math.hypot(
         powerUp.position.x - player.position.x,
@@ -509,11 +509,11 @@ function animate() {
       powerUps.splice(i, 1);
       ghosts.forEach((ghost) => {
         ghost.scared = true;
-        //make ghosts run away when scared
+        //SCARED GHOSTS CHANGE DIRECTION
         setTimeout(() => {
           scaredGhosts(ghost, player);
         }, 0);
-        //ghosts scared for 3.5sec
+        //SCARED GHOSTS FOR 3.5 SEC
         setTimeout(() => {
           ghost.scared = false;
         }, 3500);
@@ -521,17 +521,17 @@ function animate() {
     }
   }
 
-  //ghosts
+  //GHOSTS
   for (let i = ghosts.length - 1; 0 <= i; i--) {
     const ghost = ghosts[i];
     ghost.update();
 
-    //start ghost
+    //START GHOSTS
     setTimeout(() => {
       ghost.start = true;
     }, i * 7000);
 
-    //ghost touches player
+    //PLAYER-GHOST COLLISION
     if (
       circleCollidesWithRect({ circle: player, rect: ghost, Wall }) &&
       !ghost.dead
@@ -548,13 +548,13 @@ function animate() {
       }
     }
 
-    //change image when changing direction
-    changeGhostImage(ghosts, 0, 0, 0, 190, 190, 0, 190, 190, 0); //red
-    changeGhostImage(ghosts, 1, 400, 0, 590, 190, 400, 190, 590, 0); //cyan
-    changeGhostImage(ghosts, 2, 0, 390, 190, 580, 0, 580, 190, 390); //pink
-    changeGhostImage(ghosts, 3, 400, 390, 590, 580, 400, 580, 590, 390); //orange
+    //CHANGE GHOST IMG WHEN CHANGING DIRECTION
+    changeGhostImage(ghosts, 0, 0, 0, 190, 190, 0, 190, 190, 0); //RED
+    changeGhostImage(ghosts, 1, 400, 0, 590, 190, 400, 190, 590, 0); //CYAN
+    changeGhostImage(ghosts, 2, 0, 390, 190, 580, 0, 580, 190, 390); //PINK
+    changeGhostImage(ghosts, 3, 400, 390, 590, 580, 400, 580, 590, 390); //ORANGE
 
-    //change direction
+    //CHANGE GHOST DIRECTION RANDOMLY
     const collisions = [];
     walls.forEach((wall) => {
       changeDirection(collisions, ghost, wall, Wall, rectCollidesWithRect);

@@ -40,13 +40,13 @@ export class Player {
   }
 
   animate() {
-    //rotate pacman when changing direction
+    //ROTATE PACMAN
     if (this.velocity.x > 0) this.rotation = 0;
     else if (this.velocity.x < 0) this.rotation = Math.PI;
     else if (this.velocity.y > 0) this.rotation = Math.PI / 2;
     else if (this.velocity.y < 0) this.rotation = Math.PI * 1.5;
 
-    //open and close mouth
+    //OPEN AND CLOSE MOUTH
     if (this.radians < 0 || this.radians > 0.75) {
       this.openRate = -this.openRate;
     }
@@ -58,7 +58,7 @@ export class Player {
     this.move();
     this.animate();
 
-    //use wall shortcuts
+    //USE WALL SHORTCUTS
     if (this.position.x >= canvas.width && this.position.y >= Wall.height * 6) {
       setTimeout(() => {
         this.position.x = 0;
@@ -108,7 +108,7 @@ export class Ghost {
     this.position.x += this.velocity.x;
     this.position.y += this.velocity.y;
 
-    //use wall shortcuts
+    //USE WALL SHORTCUTS
     if (
       this.position.x >= canvas.width - this.width / 2 &&
       this.position.y >= Wall.height * 6 &&
