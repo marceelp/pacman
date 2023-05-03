@@ -3,15 +3,16 @@ import { c } from "../app.js";
 export class Wall {
   static width = 40;
   static height = 40;
+
   constructor({ position, image }) {
-    this.position = position;
-    this.width = 40;
-    this.height = 40;
     this.image = image;
+    this.position = position;
+    this.width = Wall.width;
+    this.height = Wall.height;
     this.image.onload = () => {
       this.position = position;
-      this.width = 40;
-      this.height = 40;
+      this.width = Wall.width;
+      this.height = Wall.height;
     };
   }
 
@@ -27,17 +28,18 @@ export class Wall {
 }
 
 export class Interior {
-  static width = 40;
-  static height = 40;
+  static width = Wall.width;
+  static height = Wall.width;
+
   constructor({ position, image }) {
-    this.width = 40;
-    this.height = 40;
-    this.position = position;
     this.image = image;
+    this.position = position;
+    this.width = Interior.width;
+    this.height = Interior.height;
     this.image.onload = () => {
       this.position = position;
-      this.width = 40;
-      this.height = 40;
+      this.width = Interior.width;
+      this.height = Interior.height;
     };
   }
 

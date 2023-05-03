@@ -73,12 +73,17 @@ export class Player {
 
 export class Ghost {
   static speed = 2;
+  static width = Wall.width;
+  static height = Wall.width;
   constructor({ position, velocity, currentSx, currentSy }) {
     this.image = createImage("./assets/img/all-ghosts.png");
+    this.position = position;
+    this.width = Ghost.width;
+    this.height = Ghost.height;
     this.image.onload = () => {
       this.position = position;
-      this.width = 40;
-      this.height = 40;
+      this.width = Ghost.width;
+      this.height = Ghost.height;
     };
     this.currentSx = currentSx;
     this.currentSy = currentSy;

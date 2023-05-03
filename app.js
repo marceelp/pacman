@@ -422,8 +422,6 @@ function animate() {
   animationID = requestAnimationFrame(animate);
   c.clearRect(0, 0, canvas.width, canvas.height);
 
-  document.querySelector("#score-text").style.display = "block";
-
   //BASE
   base.forEach((interior) => {
     interior.draw();
@@ -471,6 +469,7 @@ function animate() {
   for (let i = pellets.length - 1; 0 <= i; i--) {
     const pellet = pellets[i];
     pellet.draw();
+    //PACMAN EATS PALLETS
     if (
       Math.hypot(
         pellet.position.x - player.position.x,
@@ -548,11 +547,11 @@ function animate() {
       }
     }
 
-    //CHANGE GHOST IMG WHEN CHANGING DIRECTION
+    //CHANGE GHOST IMAGE WHEN CHANGING DIRECTION
     changeGhostImage(ghosts, 0, 0, 0, 190, 190, 0, 190, 190, 0); //RED
     changeGhostImage(ghosts, 1, 400, 0, 590, 190, 400, 190, 590, 0); //CYAN
-    changeGhostImage(ghosts, 2, 0, 380, 190, 570, 0, 580, 190, 390); //PINK
-    changeGhostImage(ghosts, 3, 400, 390, 590, 580, 400, 580, 590, 390); //ORANGE
+    changeGhostImage(ghosts, 2, 0, 380, 190, 570, 0, 570, 190, 390); //PINK
+    changeGhostImage(ghosts, 3, 400, 380, 590, 570, 400, 570, 590, 390); //ORANGE
 
     //CHANGE GHOST DIRECTION RANDOMLY
     const collisions = [];

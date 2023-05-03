@@ -71,6 +71,7 @@ export function changeGhostImage(
   sy3
 ) {
   if (ghosts[i].velocity.x >= 0 && ghosts[i].velocity.y === 0) {
+    //GHOST MOVES RIGHT
     if (!ghosts[i].scared) {
       ghosts[i].currentSx = sx0;
       ghosts[i].currentSy = sy0;
@@ -79,6 +80,7 @@ export function changeGhostImage(
       ghosts[i].currentSy = 760;
     }
   } else if (ghosts[i].velocity.x < 0 && ghosts[i].velocity.y === 0) {
+    //GHOST MOVES LEFT
     ghosts[i].currentSx = sx1;
     ghosts[i].currentSy = sy1;
     if (!ghosts[i].scared) {
@@ -89,6 +91,7 @@ export function changeGhostImage(
       ghosts[i].currentSy = 760;
     }
   } else if (ghosts[i].velocity.y >= 0 && ghosts[i].velocity.x === 0) {
+    //GHOST MOVES DOWN
     if (!ghosts[i].scared) {
       ghosts[i].currentSx = sx2;
       ghosts[i].currentSy = sy2;
@@ -97,6 +100,7 @@ export function changeGhostImage(
       ghosts[i].currentSy = 760;
     }
   } else if (ghosts[i].velocity.y < 0 && ghosts[i].velocity.x === 0) {
+    //GHOST MOVES UP
     if (!ghosts[i].scared) {
       ghosts[i].currentSx = sx3;
       ghosts[i].currentSy = sy3;

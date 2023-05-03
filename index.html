@@ -4,21 +4,23 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Canvas Pacman | Marcel Peda</title>
+    <link rel="icon" type="image/png" href="./assets/img/pacman-favicon.png" />
     <link rel="stylesheet" href="styles.css" />
+    <title>Canvas Pacman | by Marcel Peda</title>
   </head>
   <body>
+    <div id="canvas__score-wrapper">
+      <canvas></canvas>
+      <p id="score-count">Score: <span id="score">0</span></p>
+    </div>
+
     <div id="overlay">
-      <div id="finishBlock">
+      <div id="overlay__wrapper">
         <p id="result">You win!</p>
-        <div id="restart-wrapper">
+        <div id="restart__wrapper">
           <p id="restart">Reload page for restart</p>
         </div>
       </div>
-    </div>
-    <div id="container">
-      <p id="score-text">Score: <span id="score">0</span></p>
-      <canvas></canvas>
     </div>
 
     <script src="./app.js" type="module"></script>
