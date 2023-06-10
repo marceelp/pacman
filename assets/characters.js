@@ -8,7 +8,7 @@ export class Player {
     this.position = position;
     this.velocity = velocity;
     this.radius = 15;
-    this.speed = 5;
+    this.speed = 4;
     this.radians = 0.75;
     this.openRate = 0.12;
     this.rotation = 0;
